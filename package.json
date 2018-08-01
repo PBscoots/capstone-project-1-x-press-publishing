@@ -5,12 +5,13 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
-    "testdbg":"mocha --inspect-brk"
+    "testdbg": "mocha --inspect-brk"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.1.2",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "mocha": "^3.5.0",
     "morgan": "^1.9.0",

@@ -22,9 +22,10 @@ db.serialize(()=>{
 db.serialize(()=>{
     db.run('DROP TABLE IF EXISTS Series');
     db.run(`CREATE TABLE Series
-            (id INTEGER NOT NULL PRIMARY KEY,
+            (id INTEGER NOT NULL,
             name TEXT NOT NULL,
-            description TEXT NOT NULL);`,
+            description TEXT NOT NULL,
+            PRIMARY KEY(id));`,
             (err)=>{
                 if(err){
                     console.log(err);
