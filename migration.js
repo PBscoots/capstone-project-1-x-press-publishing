@@ -39,7 +39,7 @@ db.serialize(()=>{
     db.run(`CREATE TABLE Issue
             (id INTEGER NOT NULL PRIMARY KEY,
             name TEXT NOT NULL,
-            issue_number TEXT NOT NULL,
+            issue_number INTEGER NOT NULL,
             publication_date TEXT NOT NULL,
             artist_id INTEGER NOT NULL,
             series_id INTEGER NOT NULL,

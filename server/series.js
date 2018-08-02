@@ -33,8 +33,10 @@ const isValidSeries = (req,res,next) => {
     const series = req.body.series
     if(!series.name || !series.description){
         res.sendStatus(400);
+        return;
+    } else {
+        next();
     }
-    next();
 }
 
 // get all series
@@ -86,17 +88,14 @@ seriesRouter.post('/', isValidSeries, (req,res,next)=>{
 
 seriesRouter.put('/:seriesId', isValidSeries, (req,res,next)=>{
     const series = req.body.series;
-    series.name = String(series.name) || '';
-    series.description ? String(series.description) : '';
-    const oldSeries = req.series;
     db.run(`UPDATE Series SET
         name = $name,
         description = $newDescription
         WHERE Series.id = $seriesId;`,
         {
-            $name           :   series.name,
+            $name              :   series.name,
             $newDescription    :   series.description,
-            $seriesId       :   req.params.seriesId
+            $seriesId          :   req.params.seriesId
         },
         (err)=>{
             if(err){
@@ -121,13 +120,14 @@ seriesRouter.put('/:seriesId', isValidSeries, (req,res,next)=>{
 // needs work. Does not yet pass all tests
 seriesRouter.delete('/:seriesId',(req,res,next)=>{
     debugger;
-    db.all(`SELECT * FROM Issues
+    db.all(`SELECT * FROM Issue
         WHERE series_id = $seriesId`,
         {
             $seriesId   :   req.params.seriesId
         },
         (err,issues)=>{
-            if(!issues){
+            debugger;
+            if(issues = []){
                 db.run(`DELETE FROM Series
                     WHERE id = $seriesId;`,
                     {
@@ -135,14 +135,19 @@ seriesRouter.delete('/:seriesId',(req,res,next)=>{
                     },
                     (err)=>{
                         if(err){
-                            res.sendStatus(400);
+                            debugger;
+                            res.sendStatus(400); 
+                            return;
                         } else {
+                            debugger;
                             res.sendStatus(204);
+                            return;
                         }
                     }
                 );
             } else {
                 res.sendStatus(400);
+                return;
             }
         }
     );
