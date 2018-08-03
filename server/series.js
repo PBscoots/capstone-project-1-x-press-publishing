@@ -127,7 +127,7 @@ seriesRouter.delete('/:seriesId',(req,res,next)=>{
         },
         (err,issues)=>{
             debugger;
-            if(issues = []){
+            if(issues.length === 0){
                 db.run(`DELETE FROM Series
                     WHERE id = $seriesId;`,
                     {
